@@ -224,7 +224,7 @@ class SFMSolver(object):
         Hint: findEssentialMat
         """
         # TODO: step 3
-        E, mask = cv2.findEssentialMat(p1, p2, cameraMatrix=self.K_orig, method=cv2.RANSAC, prob=0.999, threshold=1.0)
+        E, mask = cv2.findEssentialMat(p1, p2, cameraMatrix=self.K, method=cv2.RANSAC, prob=0.999, threshold=1.0)
         return E, mask
 
     def compute_pose(self, p1, p2, E):
@@ -262,8 +262,8 @@ class SFMSolver(object):
         # undistort points
         p1 = p1[np.asarray(mask) == 1, :, :]
         p2 = p2[np.asarray(mask) == 1, :, :]
-        p1_un = cv2.undistortPoints(p1, self.K_orig, None)
-        p2_un = cv2.undistortPoints(p2, self.K_orig, None)
+        p1_un = cv2.undistortPoints(p1, self.K, None)
+        p2_un = cv2.undistortPoints(p2, self.K, None)
         p1_un = np.squeeze(p1_un)
         p2_un = np.squeeze(p2_un)
 
